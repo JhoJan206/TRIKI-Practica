@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#FFD93B">
+<meta name="description" content="TIRKI — el Tres en línea clásico al estilo cartoons. Tu X contra la computadora, con 3 niveles de dificultad.">
+<title>TIRKI · Tres en línea cartoon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-screen="menu">
+
+<svg class="svg-defs" viewBox="0 0 0 0" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="benDay" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <circle cx="2.2" cy="2.2" r="1.7" fill="#1B1B2F" opacity=".34"/>
+      <circle cx="6.6" cy="6.6" r="1.7" fill="#1B1B2F" opacity=".34"/>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="sky" aria-hidden="true">
+  <span class="sky__sun"></span>
+  <span class="sky__cloud sky__cloud--a"></span>
+  <span class="sky__cloud sky__cloud--b"></span>
+  <span class="sky__cloud sky__cloud--c"></span>
+  <span class="sky__trama"></span>
+</div>
+
+<main class="app">
+
+  <section class="screen screen--menu" id="screenMenu" aria-label="Menú principal">
+    <div class="menu">
+      <h1 class="title">
+        <span class="title__l" style="--c:#EF476F;--rot:-8deg">T</span>
+        <span class="title__l" style="--c:#4CC9F0;--rot:5deg">I</span>
+        <span class="title__l" style="--c:#FFD93B;--rot:-4deg">R</span>
+        <span class="title__l" style="--c:#9B5DE5;--rot:7deg">K</span>
+        <span class="title__l" style="--c:#57CC99;--rot:-6deg">I</span>
+      </h1>
+      <p class="tagline">Tres en línea. Tu X contra la computadora</p>
+
+      <div class="menu__pick">
+        <span class="menu__label">Elige a tu rival</span>
+        <div class="diffs" id="modePicker" role="radiogroup" aria-label="Nivel de dificultad"></div>
+        <button class="btn btn--jugar" id="btnPlay">
+          <span>¡JUGAR!</span>
+        </button>
+        <div class="menu__row">
+          <button class="btn btn--ghost" id="btnRulesMenu">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.9 2.9 0 1 1 3.4 3.9v1.6"/><circle cx="12.2" cy="17.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            <span>Reglas</span>
+          </button>
+          <button class="btn btn--ghost" id="btnSoundMenu" aria-pressed="true">
+            <svg class="ico ico--on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.4L12 5.4v13.2L7.4 14.5H4z"/><path d="M15.4 9a4.2 4.2 0 0 1 0 6"/><path d="M18 6.4a7.7 7.7 0 0 1 0 11.2"/></svg>
+            <svg class="ico ico--off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.4L12 5.4v13.2L7.4 14.5H4z"/><path d="M15.5 9.5l5 5m0-5l-5 5"/></svg>
+            <span>Sonido</span>
+          </button>
+          <button class="btn btn--ghost" id="btnResetScore" aria-label="Reiniciar marcador">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v4.2L15.5 5"/><path d="M12 5a7 7 0 1 1-6 9"/></svg>
+            <span>Borrar marca</span>
+          </button>
+        </div>
+      </div>
+      <div class="stage-host" data-stage></div>
+    </div>
+  </section>
+
+  <section class="screen screen--game" id="screenGame" aria-label="Tablero de juego">
+    <header class="hud">
+      <div class="hud__row">
+        <button class="btn btn--icon" id="btnGameMenu" aria-label="Volver al menú">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg>
+        </button>
+        <div class="hud__mid">
+          <span class="hud__mode" id="hudMode">FÁCIL</span>
+          <span class="turn" id="turnBadge">Tu turno — juegas con la X</span>
+        </div>
+        <button class="btn btn--icon" id="btnRulesGame" aria-label="Ver reglas">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.9 2.9 0 1 1 3.4 3.9v1.6"/><circle cx="12.2" cy="17.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        </button>
+        <button class="btn btn--icon" id="btnSoundGame" aria-pressed="true" aria-label="Sonido">
+          <svg class="ico ico--on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.4L12 5.4v13.2L7.4 14.5H4z"/><path d="M15.4 9a4.2 4.2 0 0 1 0 6"/><path d="M18 6.4a7.7 7.7 0 0 1 0 11.2"/></svg>
+          <svg class="ico ico--off" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.4L12 5.4v13.2L7.4 14.5H4z"/><path d="M15.5 9.5l5 5m0-5l-5 5"/></svg>
+        </button>
+        <button class="btn btn--icon" id="btnRestart" aria-label="Nueva partida">
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12a7 7 0 1 1-2.1-5"/><path d="M19.4 4.4V8h-3.6"/></svg>
+        </button>
+      </div>
+      <div class="score" aria-label="Marcador">
+        <span class="score__it score__it--x"><b id="scX">0</b>Tú (X)</span>
+        <span class="score__it score__it--t"><b id="scT">0</b>Empates</span>
+        <span class="score__it score__it--o"><b id="scO">0</b>Compu (O)</span>
+      </div>
+    </header>
+
+    <div class="boardwrap">
+      <div class="tic" id="tic" aria-label="Tablero de Tres en línea"></div>
+      <div class="loader" id="loader" hidden>
+        <span class="loader__word">Tirki está pensando…</span>
+        <span class="loader__dots"><i></i><i></i><i></i></span>
+      </div>
+    </div>
+
+    <div class="stage-host stage-host--game" data-stage></div>
+  </section>
+
+</main>
+
+<div class="overlay" id="overlayResult" hidden>
+  <div class="card" id="resultCard">
+    <h2 class="card__title" id="resultTitle">¡GANASTE!</h2>
+    <p class="card__stats" id="resultStats"></p>
+    <div class="card__btns">
+      <button class="btn btn--primary" id="ovAgain">OTRA PARTIDA</button>
+      <button class="btn btn--ghost" id="ovMenu">MENÚ</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay overlay--rules" id="overlayRules" hidden>
+  <div class="card card--rules">
+    <h2 class="card__title">CÓMO SE JUEGA</h2>
+    <ul class="rules">
+      <li>Es el <b>tres en línea</b> de siempre: un tablero de <b>3×3</b>.</li>
+      <li>Tú llevas la <b>X</b> y la computadora lleva la <b>O</b>.</li>
+      <li>Consigue <b>3 símbolos seguidos</b> en una fila, columna o diagonal… ¡y listo!</li>
+      <li>Elige rival: <b>FÁCIL</b> juega al azar, <b>MEDIO</b> intenta ganar o bloquearte, y <b>DIFÍCIL</b> juega perfecto.</li>
+      <li>Cada ronda <b>cambia quién empieza</b>: unas veces movéis tú primero y otras la computadora.</li>
+      <li>El marcador se guarda en tu navegador para que siga contando entre partidas.</li>
+    </ul>
+    <p class="card__tip">Truco: las esquinas son las mejores casillas para empezar.</p>
+    <div class="card__btns">
+      <button class="btn btn--primary" id="rulesClose">¡ENTENDIDO!</button>
+    </div>
+  </div>
+</div>
+
+<div class="fx" id="fx" aria-hidden="true"></div>
+
+<template id="tplStage">
+  <div class="stage">
+    <div class="bubble" data-bubble hidden><span data-bubble-text></span><i class="bubble__tail"></i></div>
+    <div class="mascot" data-mascot data-mood="idle" role="img" aria-label="Tirki, tu compañero de juego">
+      <svg class="mascot__svg" viewBox="0 0 220 214" aria-hidden="true">
+        <ellipse class="m-shadow" cx="110" cy="196" rx="56" ry="9"/>
+        <g class="m-legs">
+          <rect x="76" y="158" width="22" height="30" rx="11"/>
+          <rect x="122" y="158" width="22" height="30" rx="11"/>
+        </g>
+        <g class="m-arm m-arm--l"><rect x="26" y="106" width="38" height="16" rx="8"/></g>
+        <g class="m-arm m-arm--r"><rect x="156" y="106" width="38" height="16" rx="8"/></g>
+        <g class="m-body">
+          <ellipse class="m-body__fill" cx="110" cy="106" rx="78" ry="74"/>
+          <ellipse class="m-body__dots" cx="110" cy="106" rx="78" ry="74"/>
+        </g>
+        <g class="m-face">
+          <path class="m-brow" d="M60 58 L100 66"/><path class="m-brow" d="M120 66 L160 58"/>
+          <ellipse class="m-eye" cx="82" cy="94" rx="22" ry="25"/>
+          <ellipse class="m-eye" cx="138" cy="94" rx="22" ry="25"/>
+          <circle class="m-pupil m-pupil--l" cx="86" cy="97" r="10.5"/>
+          <circle class="m-pupil m-pupil--r" cx="142" cy="97" r="10.5"/>
+          <circle class="m-glint" cx="81" cy="91" r="3.8"/>
+          <circle class="m-glint" cx="137" cy="91" r="3.8"/>
+          <ellipse class="m-cheek" cx="58" cy="126" rx="12" ry="7.5"/>
+          <ellipse class="m-cheek" cx="162" cy="126" rx="12" ry="7.5"/>
+          <g class="m-mouths">
+            <path class="m-mouth m-mouth--smile" d="M88 128 Q110 152 132 128 Z"/>
+            <path class="m-mouth m-mouth--grin" d="M82 124 Q110 164 138 124 Z"/>
+            <ellipse class="m-mouth m-mouth--oh" cx="110" cy="138" rx="13" ry="16"/>
+            <path class="m-mouth m-mouth--flat" d="M92 139 L128 139"/>
+            <path class="m-mouth m-mouth--frown" d="M88 150 Q110 130 132 150 Z"/>
+          </g>
+          <g class="m-sweat"><path d="M46 62 q7 9 0 13 q-7-4 0-13z"/></g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</template>
+
+<script src="game.js" defer></script>
+</body>
+</html>
